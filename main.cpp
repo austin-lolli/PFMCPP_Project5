@@ -63,9 +63,11 @@ struct Headphones
     bool powerSwitch { true };
 
     void increaseVolume( unsigned int vol );
-    void increaseThisVolume( unsigned int volume );
+    unsigned int maxThisVolume();
     unsigned int holdDecreaseVolume( unsigned int vol, unsigned int target );
     unsigned int holdDecreaseThisVolume ( unsigned int target );
+    void printStatus(); 
+    void maxVol() { std::cout << "Increasing volume to: " << this->maxThisVolume() << std::endl; }
 };
 
 Headphones::Headphones() {}
@@ -76,10 +78,11 @@ void Headphones::increaseVolume ( unsigned int vol )
     std::cout << "Volume set at: " << vol << std::endl;
 }
 
-void Headphones::increaseThisVolume ( unsigned int volume )
+unsigned int Headphones::maxThisVolume ( )
 {
-    this->volume = volume;
-    std::cout << "Volume set at: " << this->volume << std::endl;
+    this->volume = 10;
+    return this->volume;
+    
 }
 
 unsigned int Headphones::holdDecreaseVolume ( unsigned int vol, unsigned int target )
@@ -117,6 +120,12 @@ unsigned int Headphones::holdDecreaseThisVolume ( unsigned int target )
 
     this->volume = 0;
     return 0;
+}
+
+void Headphones::printStatus()
+{ 
+    std::cout << "Headphone Volume: " << this->volume << ". Power Switch: " << this->powerSwitch<< std::endl;
+
 }
 
 /*
@@ -174,7 +183,7 @@ void GiftCard::makeThisPurchase(double itemCost)
     {
         this->cardBalance -= itemCost;
 
-        std::cout << "Your remaining balance is: " << this->cardBalance << std::endl;
+        std::cout << "Your remaining gift card balance is: " << this->cardBalance << std::endl;
     }
     else
     {
@@ -191,6 +200,7 @@ double GiftCard::reloadCard(double addBalance)
 double GiftCard::reloadThisCard(double addBalance)
 {
     this->cardBalance += addBalance;
+    std::cout << "New gift card balance is " << this->cardBalance << std::endl;
     return this->cardBalance;
 }
 
@@ -275,7 +285,7 @@ void Television::changeChannel( int changeTo )
 
 void Television::changeThisChannel( int channel )
 {
-    int temp = channel; 
+    int temp = this->channel; 
 
     this->channel = channel; 
 
@@ -364,7 +374,7 @@ struct AirPods
     AirPods();
     ~AirPods()
     {
-        pods.increaseThisVolume(5);
+        pods.maxThisVolume();
         std::cout << "Air Pods out of charge!" << std::endl;
     }
 
@@ -394,9 +404,27 @@ HomeTheater::HomeTheater() {}
 int main()
 {
 	Example::main();
-    AirPods airPods;
-    HomeTheater digitalDream;
-    digitalDream.bigScreen.channel = 7;
+
+    Headphones beats;
+    std::cout << "Beats Volume: " << beats.volume << " Power Switch: " << beats.powerSwitch << std::endl;
+    beats.printStatus();
+    beats.volume = 10;
+    std::cout << "Increasing Beats Volume to: " << beats.volume << std::endl;
+    beats.maxVol();
+
+    GiftCard theater;
+    theater.cardBalance = 25.00;
+    theater.makeThisPurchase( 10.50 );
+    std::cout << "Your remaining theater gift card balance is " << theater.cardBalance <<std::endl;
+    theater.reloadThisCard( 25.00 );
+    std::cout << "New theater gift card balance is " << theater.cardBalance << std::endl;
+
+    Television crt;
+    crt.changeThisChannel(3);
+    std::cout << "CRT channel changed from 48 to " << crt.channel << std::endl;
+    crt.setThisVolume(11);
+    std::cout << "CRT volume now set at: " << crt.volume << std::endl;
+    
     
 
     std::cout << "good to go!" << std::endl;
