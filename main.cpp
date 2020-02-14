@@ -28,6 +28,7 @@ Create a branch named Part3
  */
 
 #include <iostream>
+#include "LeakedObjectDetector.h"
 /*
  copied UDT 1:
  */
@@ -47,6 +48,7 @@ struct Headphones
     unsigned int holdDecreaseThisVolume ( unsigned int target );
     void printStatus(); 
     void maxVol() { std::cout << "Increasing volume to: " << this->maxThisVolume() << std::endl; }
+    JUCE_LEAK_DETECTOR(Headphones)
 };
 
 Headphones::Headphones() {}
@@ -107,6 +109,16 @@ void Headphones::printStatus()
 
 }
 
+struct HeadphonesWrapper
+{
+    HeadphonesWrapper( Headphones* ptr) : pointerToHeadphones( ptr ) { }
+    ~HeadphonesWrapper()
+    {
+        delete pointerToHeadphones;
+    }
+    
+    Headphones* pointerToHeadphones = nullptr;
+};
 /*
  copied UDT 2:
  */
@@ -136,6 +148,7 @@ struct GiftCard
     double reloadThisCard(double addBalance);
     void recurringPurchase(double subscriptionCost, int subscriptionLength);
     void thisRecurringPurchase(double subscriptionCost, int subscriptionLength);
+    JUCE_LEAK_DETECTOR(GiftCard)
 };
 
 GiftCard::GiftCard() : cardNumber(2833730365431231.0), expirationDate(20230131), cardBalance(150.00)
@@ -200,6 +213,17 @@ void GiftCard::thisRecurringPurchase(double subscriptionCost, int subscriptionLe
         std::cout << "Card billed $" << subscriptionCost << ". Your current balance is " << this->cardBalance << " and your subscription is active for " << subscriptionLength << " more months. " << std::endl;
     }
 }
+
+struct GiftCardWrapper
+{
+    GiftCardWrapper( GiftCard* ptr) : pointerToGiftCard( ptr ) { }
+    ~GiftCardWrapper()
+    {
+        delete pointerToGiftCard;
+    }
+    
+    GiftCard* pointerToGiftCard = nullptr;
+};
 /*
  copied UDT 3:
  */
@@ -233,6 +257,7 @@ struct Television
     void playThisThroughHeadphones( Headphones headphones );
     void channelUpOrDown( int changeTo );
     void thisChannelUpOrDown( int changeTo );
+    JUCE_LEAK_DETECTOR(Television)
 };
 
 Television::Television() {}
@@ -345,6 +370,17 @@ void Television::thisChannelUpOrDown( int channel )
         }
     }
 }
+
+struct TelevisionWrapper
+{
+    TelevisionWrapper( Television* ptr) : pointerToTelevision( ptr ) { }
+    ~TelevisionWrapper()
+    {
+        delete pointerToTelevision;
+    }
+    
+    Television* pointerToTelevision = nullptr;
+};
 /*
  new UDT 4:
  */
@@ -358,9 +394,21 @@ struct AirPods
     }
 
     Headphones pods;
+    JUCE_LEAK_DETECTOR(AirPods)
 };
 
 AirPods::AirPods() {}
+
+struct AirPodsWrapper
+{
+    AirPodsWrapper( AirPods* ptr) : pointerToAirPods( ptr ) { }
+    ~AirPodsWrapper()
+    {
+        delete pointerToAirPods;
+    }
+    
+    AirPods* pointerToAirPods = nullptr;
+};
 /*
  new UDT 5:
  */
@@ -375,32 +423,44 @@ struct HomeTheater
     
     Television bigScreen;
     Headphones turtleBeach;
+    JUCE_LEAK_DETECTOR(HomeTheater)
 };
 
 HomeTheater::HomeTheater() {}
 
+struct HomeTheaterWrapper
+{
+    HomeTheaterWrapper( HomeTheater* ptr) : pointerToHomeTheater( ptr ) { }
+    ~HomeTheaterWrapper()
+    {
+        delete pointerToHomeTheater;
+    }
+    
+    HomeTheater* pointerToHomeTheater = nullptr;
+};
+
 #include <iostream>
 int main()
 {
-    Headphones beats;
-    std::cout << "Beats Volume: " << beats.volume << " Power Switch: " << beats.powerSwitch << std::endl;
-    beats.printStatus();
-    beats.volume = 10;
-    std::cout << "Increasing Beats Volume to: " << beats.volume << std::endl;
-    beats.maxVol();
+    HeadphonesWrapper beats( new Headphones() );
+    std::cout << "Beats Volume: " << beats.pointerToHeadphones->volume << " Power Switch: " << beats.pointerToHeadphones->powerSwitch << std::endl;
+    beats.pointerToHeadphones->printStatus();
+    beats.pointerToHeadphones->volume = 10;
+    std::cout << "Increasing Beats Volume to: " << beats.pointerToHeadphones->volume << std::endl;
+    beats.pointerToHeadphones->maxVol();
 
-    GiftCard theater;
-    theater.cardBalance = 25.00;
-    theater.makeThisPurchase( 10.50 );
-    std::cout << "Your remaining theater gift card balance is " << theater.cardBalance <<std::endl;
-    theater.reloadThisCard( 25.00 );
-    std::cout << "New theater gift card balance is " << theater.cardBalance << std::endl;
+    GiftCardWrapper theater( new GiftCard() );
+    theater.pointerToGiftCard->cardBalance = 25.00;
+    theater.pointerToGiftCard->makeThisPurchase( 10.50 );
+    std::cout << "Your remaining theater gift card balance is " << theater.pointerToGiftCard->cardBalance <<std::endl;
+    theater.pointerToGiftCard->reloadThisCard( 25.00 );
+    std::cout << "New theater gift card balance is " << theater.pointerToGiftCard->cardBalance << std::endl;
 
-    Television crt;
-    crt.changeThisChannel(3);
-    std::cout << "CRT channel changed from 48 to " << crt.channel << std::endl;
-    crt.setThisVolume(11);
-    std::cout << "CRT volume now set at: " << crt.volume << std::endl;
+    TelevisionWrapper crt( new Television() );
+    crt.pointerToTelevision->changeThisChannel(3);
+    std::cout << "CRT channel changed from 48 to " << crt.pointerToTelevision->channel << std::endl;
+    crt.pointerToTelevision->setThisVolume(11);
+    std::cout << "CRT volume now set at: " << crt.pointerToTelevision->volume << std::endl;
     
     
 
