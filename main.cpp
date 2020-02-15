@@ -270,9 +270,9 @@ void Television::setVolume( int vol )
 
 }
 
-void Television::setThisVolume( int volume )
+void Television::setThisVolume( int vol )
 {
-    this->volume = volume;
+    this->volume = vol;
 
     std::cout << "Volume now set at: " << this->volume << std::endl;
 
@@ -287,11 +287,11 @@ void Television::changeChannel( int changeTo )
     std::cout << "Channel changed from " << temp << " to " << changeTo << std::endl;
 }
 
-void Television::changeThisChannel( int channel )
+void Television::changeThisChannel( int c )
 {
     int temp = this->channel; 
 
-    this->channel = channel; 
+    this->channel = c; 
 
     std::cout << "Channel changed from " << temp << " to " << this->channel << std::endl;
 }
@@ -346,15 +346,15 @@ void Television::channelUpOrDown( int changeTo )
 }
 
 
-void Television::thisChannelUpOrDown( int channel )
+void Television::thisChannelUpOrDown( int c )
 {
-    if( channel == this->channel ) 
+    if( c == this->channel ) 
     {
         std::cout << "Already on channel " << this->channel << std::endl;
     }
-    else if( channel > this->channel ) 
+    else if( c > this->channel ) 
     {
-        while( channel != this->channel )
+        while( c != this->channel )
         {
             ++this->channel; 
             std::cout << "Channel: " << this->channel << std::endl;
@@ -362,7 +362,7 @@ void Television::thisChannelUpOrDown( int channel )
     }
     else // changeTo < channel
     {
-        int temp = this->channel - channel;
+        int temp = this->channel - c;
         for( int i = 0; i < temp; ++i )
         {
             --this->channel;
