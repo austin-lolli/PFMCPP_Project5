@@ -41,6 +41,7 @@
 #include "GiftCard.h"
 #include "Headphones.h"
 #include "HomeTheater.h"
+#include "Television.h"
 #include "Wrappers.h"
 #include <iostream>
 
@@ -66,7 +67,7 @@ int main()
     crt.pointerToTelevision->setThisVolume(11);
     std::cout << "CRT volume now set at: " << crt.pointerToTelevision->volume << std::endl;
     
-    
+
 
     std::cout << "good to go!" << std::endl;
 }

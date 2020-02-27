@@ -1,6 +1,5 @@
 #include "Wrappers.h"
 
-
 HeadphonesWrapper::HeadphonesWrapper( Headphones* ptr) : pointerToHeadphones( ptr ) { }
 
 HeadphonesWrapper::~HeadphonesWrapper()

@@ -1,13 +1,12 @@
 #pragma once
 
 #include "LeakedObjectDetector.h"
-#include "AirPods.h" FIXME remove this include.  you're not using anything in it.
-#include "GiftCard.h" FIXME remove this include.  you're not using anything in it.
-#include "Headphones.h" FIXME remove this include.  you're not using anything in it.
-#include "HomeTheater.h" FIXME remove this include.  you're not using anything in it.
-#include "Wrappers.h" FIXME remove this include.  you're not using anything in it.
 
-FIXME forward declare your types being used as pointers.  Include in the cpp file since that's where you use them
+struct Headphones;
+struct GiftCard;
+struct Television;
+struct AirPods;
+struct HomeTheater;
 
 struct HeadphonesWrapper
 {
