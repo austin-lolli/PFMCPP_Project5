@@ -1,7 +1,7 @@
 #include <iostream>
 #include "HomeTheater.h"
-#include "Headphones.h"
-#include "Television.h"
+#include "Headphones.h" FIXME remove this include.  you're not using anything in it.
+#include "Television.h" FIXME remove this include.  you're not using anything in it.
 
 HomeTheater::HomeTheater() {}
 
