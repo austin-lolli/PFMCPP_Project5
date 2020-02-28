@@ -1,5 +1,9 @@
-
 #include "Wrappers.h"
+#include "AirPods.h"
+#include "GiftCard.h" 
+#include "Headphones.h" 
+#include "HomeTheater.h" 
+#include "Television.h"
 
 HeadphonesWrapper::HeadphonesWrapper( Headphones* ptr) : pointerToHeadphones( ptr ) { }
 

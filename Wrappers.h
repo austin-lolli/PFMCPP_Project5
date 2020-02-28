@@ -2,11 +2,11 @@
 
 #include "LeakedObjectDetector.h"
 
-struct Headphones;
-struct GiftCard;
-struct Television;
 struct AirPods;
+struct GiftCard;
+struct Headphones;
 struct HomeTheater;
+struct Television;
 
 struct HeadphonesWrapper
 {
